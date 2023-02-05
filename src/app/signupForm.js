@@ -1,5 +1,6 @@
 import { createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js';
 import { auth } from './firebase.js';
+import { showMessage } from "./showMessage.js";
 
 const signupForm = document.querySelector('#signup-form');
 
@@ -12,28 +13,31 @@ signupForm.addEventListener('submit', async (e) => {
   console.log(email, password);
 
   try {
-    const userCredential = await createUserWithEmailAndPassword(
+    const userCredentials = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
-    console.log('userCredential', userCredential);
+    console.log(userCredentials);
 
     // close the signup modal & reset form
     const signupModal = document.querySelector('#signupModal');
     const modal = bootstrap.Modal.getInstance(signupModal);
     modal.hide();
+
+    showMessage("Welcome " + userCredentials.user.email)
+
   } catch (error) {
     console.log(error.message);
     console.log(error.code);
     if (error.code === 'auth/email-already-in-use') {
-      alert('Email already in use')
+      showMessage("Email already in use", "error")
     } else if (error.code === 'auth/invalid-email') {
-      alert('invalid email')
+      showMessage("Invalid email", "error")
     } else if (error.code === 'auth/weak-password') {
-      alert('password to weak')
+      showMessage("Password to weak", "error")
     } else if (error.code) {
-      alert('somethind went wrong')
+      showMessage("Something went wrong", "error")
     }
   }
 });
