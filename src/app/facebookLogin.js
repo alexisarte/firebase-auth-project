@@ -1,15 +1,16 @@
-import { GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js';
+import { FacebookAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js';
 import { auth } from './firebase.js';
 import { showMessage } from './showMessage.js';
 
-const googleButton = document.querySelector('#googleLogin');
+const facebookButton = document.querySelector('#facebookLogin');
 
-googleButton.addEventListener('click', async () => {
-  
-  const provider = new GoogleAuthProvider();
-  
+facebookButton.addEventListener('click', async () => {
+
+  const provider = new FacebookAuthProvider();
+
   try {
     const credentials = await signInWithPopup(auth, provider);
+    console.log(credentials);
     
     const modal = bootstrap.Modal.getInstance(
       document.querySelector('#signinModal')
@@ -26,7 +27,6 @@ googleButton.addEventListener('click', async () => {
       showMessage('Wrong password', 'error');
     } else if (error.code) {
       showMessage('Something went wrong', 'error');
-      console.log(error);
     }
   }
 });
