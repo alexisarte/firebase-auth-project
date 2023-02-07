@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js';
+import { GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js"
 import { auth } from './firebase.js';
 import { showMessage } from './showMessage.js';
 
@@ -16,17 +16,14 @@ googleButton.addEventListener('click', async () => {
     );
     modal.hide();
     
-    showMessage(`Welcome back ${credentials.user.displayname}!`);
+    showMessage(`Welcome back ${credentials.user.displayName}!`);
   } catch (error) {
-    console.log(error.message);
-    console.log(error.code);
     if (error.code === 'auth/user-not-found') {
       showMessage('User not found', 'error');
     } else if (error.code === 'auth/wrong-password') {
       showMessage('Wrong password', 'error');
-    } else if (error.code) {
+    } else {
       showMessage('Something went wrong', 'error');
-      console.log(error);
     }
   }
 });
