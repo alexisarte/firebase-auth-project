@@ -19,6 +19,8 @@ facebookButton.addEventListener('click', async () => {
     
     showMessage(`Welcome back ${credentials.user.displayName}!`);
   } catch (error) {
+    console.log(error.message);
+    console.log(error.code);
     if (error.code === 'auth/user-not-found') {
       showMessage('User not found', 'error');
     } else if (error.code === 'auth/wrong-password') {
